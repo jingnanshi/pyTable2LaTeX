@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-script minSpecVersion="1.000000" authoringTool="com.apple.PackageMaker" authoringToolVersion="3.0.1" authoringToolBuild="172">
+    <title>csv2latex</title>
+    <options customize="never" allow-external-scripts="no" rootVolumeOnly="false"/>
+    <installation-check script="pm_install_check();"/>
+    <script>function pm_install_check() {
+  if(!(system.version.ProductVersion >= '10.4.0')) {
+    my.result.title = 'Unable to Install';
+    my.result.message = 'csv2latex requires Ruby, which is only installed by default on OS 10.4 or better. If you are running Ruby on 10.3 you can install the script from the source folder directly.';
+    my.result.type = 'Fatal';
+    return false;
+  }
+  return true;
+}
+</script>
+    <readme file="ReadMe"/>
+    <license file="License"/>
+    <choices-outline>
+        <line choice="choice4"/>
+    </choices-outline>
+    <choice id="choice4" title="csv2latex">
+        <pkg-ref id="ctan.csv2latex.csv2latex.csv2latex.pkg"/>
+    </choice>
+    <pkg-ref id="ctan.csv2latex.csv2latex.csv2latex.pkg" installKBytes="4" version="1.1" auth="Root">file:./Contents/Packages/csv2latex.pkg</pkg-ref>
+</installer-script>

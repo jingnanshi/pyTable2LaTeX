@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+\usepackage{parskip}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage[small,compact]{titlesec}
+\usepackage{titling}
+\usepackage{url}
+\newcommand{\BS}{\textbackslash}
+\setlength{\droptitle}{-1in}
+\title{Using \texttt{csv2latex} to paste spreadsheet table cells}
+\author{Alan Munn\\\protect\url{amunn@msu.edu}}
+\date{Version 1.1\\January 31, 2010}
+\begin{document}
+\maketitle
+\section{Description}
+\texttt{csv2latex} is a Ruby script for Mac OS X that converts table cells copied from a spreadsheet application such as Excel, iWork Numbers or OpenOffice Calc to various kinds of popular \LaTeX\ table formats. The distribution also comes with an Applescript for simple integration into Applescript-aware editors on the Mac. When combined with the Applescript, \texttt{csv2latex} provides seamless cut-and-paste functionality between spreadsheet applications and the editor.
+
+\section{Contents}
+
+The distribution folder contains an installer package, an Applescript. It also contains a source folder containing the source code, and a TeXShop folder containing a TeXShop macro file.
+\begin{enumerate}
+\item \texttt{csv2latex}\\
+This is a ruby script, originally written by Tom Counsell (and called \texttt{xl2latex.rb}) and modified by Alan Munn.
+	
+The script allows for four command-line arguments corresponding to the table style required:
+\begin{description}
+\item[cells]		converts the clipboard text simply to latex table cells, not enclosed within a tabular environment.
+\item[simple]	creates a simple tabular environment around the cells
+\item[booktabs]	assumes the first line is a header, and places
+					\texttt{\BS toprule}, \texttt{\BS midrule} and \texttt{\BS bottomrule} in the appropriate
+					places within a tabular environment
+\item[longtable]	assumes the first line is a header, creates
+					the appropriate longtable header information and places
+					the cells in a longtable environment
+					
+\item[<none>] If no argument is given, the script produces the \textbf{simple} tablestyle.
+\end{description}
+\item	\texttt{csv2latex.scpt}\\An Applescript which can be called from within your editor via a menu choice or assigned to a keystroke.
+\end{enumerate}
+
+\section{Installation}
+Run the installer package.  This will place the ruby script \texttt{csv2latex} in \texttt{/usr/local/bin}.
+\subsection{Editors other than TeXShop}
+\begin{enumerate}
+\item Copy the Applescript into the scripts folder of your Editor.  A likely place for this would be in \texttt{$\sim$/Library/Application Support/<your editor>/Scripts} (or \texttt{/Library/Application Support/<your editor>/Scripts} for all users). Check your editor's manual for the exact location.
+\end{enumerate}
+\subsection{TeXShop}
+\begin{enumerate}
+\item Within TeXShop, open the Macro Editor.
+\item Choose ``Add macros from file'' from the Macros menu, and open the \texttt{csv2latex.plist} file contained in the csv2latex TeXShop folder. This will add a macro called ``Paste Spreadsheet Cells'' to the bottom of your macros menu.  Once the macro is added you can move it to any location in the list by dragging its name in the lefthand panel of the macro editor. 
+\end{enumerate}
+
+
+\section{How to use}
+\subsection{With TeXShop}
+\begin{enumerate}
+\item Select a range of cells your spreadsheet application, and copy them to the clipboard.
+
+\item Within TeXShop, choose Paste Spreadsheet Cells from the Macros menu.  You will be asked to choose a table style: these correspond to the table styles described above.
+
+\item Choose a table style, and click OK (or double click on a table style), and the selected cells will be pasted into the current window.
+\end{enumerate}
+\subsection{With other editors}
+
+\begin{enumerate}
+\item Select a range of cells your spreadsheet application, and copy them to the clipboard.
+
+\item Choose csv2latex from the Scripts menu of your Editor. You will be asked to choose a table style: these correspond to the table styles described above.
+\item Choose a table style, and click OK (or double click on a table style), and the selected cells will be pasted into the current window.
+
+\end{enumerate}
+\paragraph{Note:} \texttt{csv2latex} modifies the contents of the clipboard, so that after your run the script the clipboard contains the LaTeX formatted text, and not your originally copied cells.  This means that if you need to change cell formats, you must re-copy the cells from your spreadsheet before choosing a different cell format to paste.
+\section{Note for TeXShop users}
+As of version 2.30 of TeXShop, \texttt{csv2latex} will be included within TeXShop directly.  Since it is a macro, you will only notice the change if you move your local macros plist file out of the macros folder and then restart TeXShop.  This will generate a new copy of the macros. You can then add back your own custom macros from the moved plist file.\\The macro file is located in  \texttt{$\sim$/Library/TeXShop/Macros/Macros\_Latex.plist}
+\section{Acknowledgements}
+\begin{tabular}{l}
+Original script written by Tom Counsell; Modified and renamed by Alan Munn\\
+Released under the GNU Public Licence\\
+Original script Copyright 2005 by Tom Counsell\\
+Modified script and Applescript Copyright 2009, 2010 by Alan Munn\\
+Documentation Copyright 2009, 2010 by Alan Munn\\
+\end{tabular}
+
+
+
+
+
+\end{document}
