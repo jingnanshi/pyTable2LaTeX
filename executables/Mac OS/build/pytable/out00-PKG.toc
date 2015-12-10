@@ -1,0 +1,12 @@
+('/Users/John/Documents/pyTable2LaTeX/src/build/pytable/out00-PKG.pkg',
+ {'BINARY': 1,
+  'DATA': 1,
+  'EXECUTABLE': 1,
+  'EXTENSION': 1,
+  'PYMODULE': 1,
+  'PYSOURCE': 1,
+  'PYZ': 0},
+ [('out00-PYZ.pyz', '/Users/John/Documents/pyTable2LaTeX/src/build/pytable/out00-PYZ.pyz', 'PYZ'), ('_struct', '//anaconda/lib/python2.7/lib-dynload/_struct.so', 'EXTENSION'), ('zlib', '//anaconda/lib/python2.7/lib-dynload/zlib.so', 'EXTENSION'), ('struct', '//anaconda/lib/python2.7/struct.pyc', 'PYMODULE'), ('pyimod01_os_path', '//anaconda/lib/python2.7/site-packages/PyInstaller-3.0-py2.7.egg/PyInstaller/loader/pyimod01_os_path.pyc', 'PYMODULE'), ('pyimod02_archive', '//anaconda/lib/python2.7/site-packages/PyInstaller-3.0-py2.7.egg/PyInstaller/loader/pyimod02_archive.pyc', 'PYMODULE'), ('pyimod03_importers', '//anaconda/lib/python2.7/site-packages/PyInstaller-3.0-py2.7.egg/PyInstaller/loader/pyimod03_importers.pyc', 'PYMODULE'), ('pyiboot01_bootstrap', '//anaconda/lib/python2.7/site-packages/PyInstaller-3.0-py2.7.egg/PyInstaller/loader/pyiboot01_bootstrap.py', 'PYSOURCE'), ('pyi_rth__tkinter', '/anaconda/lib/python2.7/site-packages/PyInstaller-3.0-py2.7.egg/PyInstaller/loader/rthooks/pyi_rth__tkinter.py', 'PYSOURCE'), ('pytable', '/Users/John/Documents/pyTable2LaTeX/src/pytable.py', 'PYSOURCE')],
+ True,
+ None,
+ False)
