@@ -24,6 +24,8 @@ class App:
                          wrap=WORD)
         self.text_raw = t_raw_table
 
+        # http://stackoverflow.com/questions/5870561/re-binding-select-all-in-text-widget
+        # Thank you, Bryan Oakley! 
         master.bind_class("Text","<Command-a>", self.selectall)
 
         start_str = "Please delete this line and copy your excel table here"
