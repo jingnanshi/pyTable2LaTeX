@@ -3,7 +3,7 @@
 A Python program with GUI to convert csv/Excel Tables to LaTeX codes
 
 ## Download
-[Mac OS: v1.0.0](https://github.com/jingnanshi/pyTable2LaTeX/releases/tag/v1.0.0)
+[Mac OS: v1.1.0](https://github.com/jingnanshi/pyTable2LaTeX/releases/tag/v1.1.0)
 
 ## Instructions
 You can either run the Python script from command lines, or run the executable compatible with your platform. The GUI is self-explanatory.
