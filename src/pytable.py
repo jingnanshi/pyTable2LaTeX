@@ -8,13 +8,14 @@ Created on Tue Dec  1 21:30:14 2015
 from Tkinter import *
 import tkMessageBox
 from table import Table
+from tkFileDialog import *
 
 class App:
 
     def __init__(self, master):
         # initialize Table object
         self.table = Table()
-
+        self.master = master
         # title
         title = Label(master,text= "pyTable",font=("Helvetica", 16))
         self.title = title
@@ -70,9 +71,16 @@ class App:
         
         # convert button
         convert_button = Button(master, text="Convert", command=self.convert,
-                                padx = 2, pady = 2)
+                                padx = 3, pady = 2)
         self.convert_button = convert_button
         
+        # copy from clipboard
+        paste_from_clipboard = Button(master, text="Paste from Clipboard", command=self.pasteFromClipboard, padx = 2, pady = 2)
+        paste_from_clipboard.grid(row=16,column=1)
+
+        copy_to_clipboard = Button(master, text="Copy to Clipboard", command=self.copyToClipboard, padx = 2, pady = 2)
+        copy_to_clipboard.grid(row=17,column=1)
+
         # positioning the tk widgets
         self.title.grid(row=0,column=1)
         self.text_raw.grid(row=1,column=0,rowspan=18)
@@ -89,10 +97,10 @@ class App:
         # menu
         menubar = Menu(master)
         filemenu = Menu(menubar, tearoff=0)
-        filemenu.add_command(label="Open", command=self.donothing)
+        filemenu.add_command(label="Open", command=self.openFile)
         filemenu.add_command(label="Save Table To", command=self.donothing)
         filemenu.add_command(label="Close", command=self.donothing)
-
+        
         filemenu.add_separator()
 
         filemenu.add_command(label="Exit", command=master.destroy)
@@ -107,6 +115,27 @@ class App:
 
     def selectall(self, event):
         event.widget.tag_add("sel","1.0","end")
+
+    def openFile(self):
+        self.text_raw.delete(1.0,END)
+        f = askopenfile(mode='r')
+        # clear the unwanted \r
+        f_text = f.read().replace('\r','')
+        self.text_raw.insert(END,f_text)
+        f.close()
+
+    def pasteFromClipboard(self):
+        """ paste from clipboard
+        """
+        self.text_raw.delete(1.0,END) 
+        self.text_raw.insert(END, self.master.clipboard_get())
+
+
+    def copyToClipboard(self):
+        """ copy to clipboard
+        """
+        self.master.clipboard_clear() 
+        self.master.clipboard_append(self.text_texed.get("1.0", 'end-1c'))
 
     def donothing(self):
         pass
