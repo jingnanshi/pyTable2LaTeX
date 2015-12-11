@@ -54,6 +54,7 @@ class Table:
         	linechange: linechange character
         """
         # clearn the raw string 
+        string = string.rstrip()
 
         # generate a list of lists with each element is a list that represents a row
         text = self.escapeLaTeX(string)
@@ -68,7 +69,7 @@ class Table:
         # calculate the column number
         # if text[1] does not exist, that means this is not a proper table
         try:
-            cols = len(text[1])
+            cols = len(text[0])
         except IndexError:
             print "This is not a table! No columns exist!"
             return
@@ -131,12 +132,6 @@ class Table:
                     new_cell_list[index] = '$' + new_cell_list[index] + '$'
             new_cell = ' '.join(new_cell_list)
         return new_cell
-
-
-    def cleanRawString(self,string):
-        """ clear string out of the trailling whitespace characters
-        """
-        pass
 
 
     
