@@ -7,18 +7,21 @@ Created on Tue Dec  1 21:30:14 2015
 TO-DO: add exceltoLatex convertion functions for: simple, cells, booktabs and longtable
 
 """
-
 from Tkinter import *
 import tkMessageBox
+from table import Table
 
 class App:
 
     def __init__(self, master):
+        # initialize Table object
+        self.table = Table()
+
         # title
         title = Label(master,text= "pyTable",font=("Helvetica", 16))
         self.title = title
         
-        # raw excel table
+        # raw excel/csv table
         t_raw_table = Text(master, width=40, height=24, 
                          wrap=WORD)
         self.text_raw = t_raw_table
@@ -37,9 +40,11 @@ class App:
         
         # raw data format   
         format_list = Listbox(master,selectmode = SINGLE,exportselection = False, height=2)
-        self.formats = ["csv","excel"]
-        format_list.insert(0,self.formats[0])
-        format_list.insert(1,self.formats[1])
+        self.formats = self.table.getFormats()
+        for i in range(len(self.formats)):
+
+            format_list.insert(i,self.formats[i])
+        
         self.format_list = format_list
         
         # label
@@ -50,11 +55,10 @@ class App:
         #scrollbar = Scrollbar(master)
         
         style_list = Listbox(master,exportselection = False, selectmode = SINGLE,height=4) 
-        self.styles = ["simple","booktabs","cells","longtable"]
-        style_list.insert(0, self.styles[0])        
-        style_list.insert(1, self.styles[1])
-        style_list.insert(2, self.styles[2])
-        style_list.insert(3, self.styles[3])
+        self.styles = self.table.getStyles()
+        for i in range(len(self.styles)):
+            style_list.insert(i, self.styles[i])        
+
         self.style_list = style_list
         
         # math? checkbox
@@ -113,9 +117,13 @@ class App:
         print "convert"
         print self.math_var.get()
         print self.getRawString()
-        print self.escapeLaTeX(self.getRawString())
-        self.updateEndText(self.rawToLaTeX(self.getRawString()))
+        print self.table.escapeLaTeX(self.getRawString())
+        # update the table
+        self.table.update(self.getRawString(), self.getSelectedFormat())      
+
+        latex_table =  self.table.getLaTeX(self.getSelectedStyle,self.math_var.get())
         
+        self.updateEndText(latex_table)
        
     def getRawString(self):
         """ get the raw table string in the app
@@ -129,188 +137,29 @@ class App:
         self.text_texed.config(state=NORMAL)
         self.text_texed.delete(1.0, END)
         self.text_texed.insert(END, string)
-        
 
-    def cleanRawString(self,string):
-        """ clear string out of the trailling whitespace characters
-        """
-        pass
-
-    def rawToLaTeX(self,string):
-        """ convert raw to latex
+    def getSelectedFormat(self):
+        """ return the GUI selected raw data format
         """
         try:
             format_index = self.format_list.curselection()[0]
             raw_format = self.formats[format_index]
+            return raw_format
         except IndexError:
             print "Format not selected!"
-            return
+            return 
 
-        if (raw_format == "csv"):
-            return self.delimToLaTeX(string, ',','\n')
-        else:
-            return self.delimToLaTeX(string, '\t','\r')
-        
-
-    def escapeLaTeX(self,string):
-        """ escape the special characters present in the string
+    def getSelectedStyle(self):
+        """ return the GUI selected latex style
         """
-        string_to_escape = "{([&$#%])}"
-        new_str_list = map(lambda x: "\\" + x if x in string_to_escape else x,
-                    string)
-        return ''.join(new_str_list)
-    
-    def delimToLaTeX(self,string,delim,linechange):
-        """ convert csv raw table to LaTeX
-            input: raw csv format string
-            output: a string in latex format
-            line change character: \n 
-            cell separate character: ,
-        """
-        # get style speciation
         try:
             style_index = self.style_list.curselection()[0]
             style = self.styles[style_index]
         except IndexError:
             print "Style not selected!"
-            return
-
-        # clearn the raw string 
-
-        # generate a list of lists with each element is a list that represents a row
-        text = self.escapeLaTeX(string)
-        text = text.split(linechange)
-        # split each row into cells by commas
-        text = map(lambda x: x.split(delim), text)
-        print text
-
-        # calculate the row number
-        rows = len(text)
-
-        # calculate the column number
-        # if text[1] does not exist, that means this is not a proper table
-        try:
-            cols = len(text[1])
-        except IndexError:
-            print "This is not a table! No columns exist!"
-            return
-
-        # convert each cell by math indicator
-        for i in range(rows):
-                for j in range(cols):
-                    cell = text[i][j]
-                    text[i][j] = self.convertCell(cell,self.math_var.get())
-
-        # generate a new table based of the lol
-        # check each cell
-        new_text = map(lambda x: ' & '.join(x), text)
-        print new_text
-        new_text_str = ' \\\\ \n'.join(new_text) + ' \\\\ \n \n'
-        
-        # cell style
-        if (style == 'cells'):
-            pass
-            
-        # simple style
-        if (style == 'simple'):                                          
-            new_text_str = '\\begin{} \n \n'.format('{tabular}' + '{'+'l'*cols+'}') + new_text_str + '\\end{tabular}'
-        
-        # booktabs
-        if (style == 'booktabs'):
-            midrule_index = new_text_str.find('\n')+1
-            top = '\\toprule \n' + new_text_str[:midrule_index]
-            bottom =  new_text_str[midrule_index:] + '\\bottomrule \n'
-            new_text_str =  top + '\\midrule \n' + bottom
-            new_text_str = '\\begin{} \n \n'.format('{tabular}' + '{'+'l'*cols+'}') + new_text_str + '\\end{tabular}'
-
-        # longtable
-        if (style == 'longtable'):
-            mid_index = new_text_str.find('\n')+1
-            first_row = new_text_str[:mid_index]
-            rest = new_text_str[mid_index:]
-            top = first_row + '\\endfirsthead \n'+ first_row  + '\\endhead'
-            top = top + '\\multicolumn{} \n'.format('{' + str(cols) + '}' + '{'+'l'*cols+'}'+'{{Continued\ldots}}')
-            top = top + '\\endfoot \n\\hline \n\\endlastfoot \n \n'
-            new_text_str = top + rest
-            new_text_str = '\\begin{} \n \n'.format('{longtable}' + '{'+'l'*cols+'}') + new_text_str + '\\end{longtable}'
-
-        return new_text_str
+            return style
 
 
-    
-    def convertCell(self, cell, is_math = False):
-        """ convert cell string to latex format
-            first tokenize string by spaces
-            if is_math = true, add $ $ around numbers
-            
-            TESTED
-        """
-        new_cell = cell
-        if (is_math):
-            # separate the cell into a list using space
-            new_cell_list = new_cell.split(' ')
-            # check each element; if number, add $$ around
-            for index in range(len(new_cell_list)):
-                if (self.is_number(new_cell_list[index])):
-                    new_cell_list[index] = '$' + new_cell_list[index] + '$'
-            new_cell = ' '.join(new_cell_list)
-        return new_cell
-    
-    def is_number(self,s):
-        """ if s is a number, return True
-            TESTED
-        """
-        if (self.is_float(s) or self.is_int(s)):
-            return True
-        return False
-
-    def is_float(self,s):
-        """ if s is a float, return True
-            TESTED
-        """
-        try:
-            float(s)
-            return True
-        except ValueError:
-            return False
-
-    def is_int(self,s):
-        """ if s is an int, return True
-            TESTED
-        """
-        try:
-            int(s)
-            return True
-        except ValueError:
-            return False
-
-
-        
-#==============================================================================
-#     def convertToLaTeX(self,table_string, table_type):
-#     """ convert the table in table string to a latex table based on the table
-#         type provided.
-#         Available table types: booktabs, longtable, simple, cells
-#     """
-# 
-#         if (table_type == "simples"):
-#             pass
-#         elif (table_type == "booktabs"):
-#             pass
-#         elif (table_type == "longtable"):
-#             pass
-#         else:
-#             pass
-#==============================================================================
-        
-
-root = Tk()
- 
-app = App(root)
-try:
-    root.mainloop()
-except TclError:
-    print 'tclerror'
 
 
 
