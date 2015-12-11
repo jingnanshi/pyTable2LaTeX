@@ -23,6 +23,9 @@ class App:
         t_raw_table = Text(master, width=40, height=24, 
                          wrap=WORD)
         self.text_raw = t_raw_table
+
+        master.bind_class("Text","<Command-a>", self.selectall)
+
         start_str = "Please delete this line and copy your excel table here"
         self.text_raw.insert(INSERT, start_str)
     
@@ -40,7 +43,6 @@ class App:
         format_list = Listbox(master,selectmode = SINGLE,exportselection = False, height=2)
         self.formats = self.table.getFormats()
         for i in range(len(self.formats)):
-
             format_list.insert(i,self.formats[i])
         
         self.format_list = format_list
@@ -101,6 +103,9 @@ class App:
 
         master.config(menu=menubar)
 
+    def selectall(self, event):
+        event.widget.tag_add("sel","1.0","end")
+
     def donothing(self):
         pass
 
@@ -159,6 +164,8 @@ class App:
         except IndexError:
             print "Style not selected!"
             return style
+
+
 
 
 
