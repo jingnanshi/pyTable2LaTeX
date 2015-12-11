@@ -149,7 +149,10 @@ class App:
         """ return the GUI selected raw data format
         """
         try:
-            format_index = self.format_list.curselection()[0]
+            # a bug in Tkinter 1.160 (Python 2.2) and earlier versions causes 
+            # this list to be returned as a list of strings, instead of integers
+            selected_list = map(int, self.format_list.curselection())
+            format_index = selected_list[0]
             raw_format = self.formats[format_index]
             return raw_format
         except IndexError:
@@ -160,7 +163,10 @@ class App:
         """ return the GUI selected latex style
         """
         try:
-            style_index = self.style_list.curselection()[0]
+            # a bug in Tkinter 1.160 (Python 2.2) and earlier versions causes 
+            # this list to be returned as a list of strings, instead of integers
+            selected_list = map(int, self.style_list.curselection())
+            style_index = selected_list[0]
             style = self.styles[style_index]
             return style
         except IndexError:
