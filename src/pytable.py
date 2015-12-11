@@ -4,8 +4,6 @@ Created on Tue Dec  1 21:30:14 2015
 
 @author: Jingnan Shi
 
-TO-DO: add exceltoLatex convertion functions for: simple, cells, booktabs and longtable
-
 """
 from Tkinter import *
 import tkMessageBox
@@ -114,16 +112,18 @@ class App:
     def convert(self):
         """ function called when convert is called
         """
-        print "convert"
-        print self.math_var.get()
-        print self.getRawString()
-        print self.table.escapeLaTeX(self.getRawString())
+        print "converting ........."
+
         # update the table
+        print "Source format: " + self.getSelectedFormat()
         self.table.update(self.getRawString(), self.getSelectedFormat())      
 
-        latex_table =  self.table.getLaTeX(self.getSelectedStyle,self.math_var.get())
+        # get the latex table
+        print "Target style: " + self.getSelectedStyle()
+        latex_table =  self.table.getLaTeX(self.getSelectedStyle(),self.math_var.get())
         
-        self.updateEndText(latex_table)
+        # update gui
+        self.updateTargetText(latex_table)
        
     def getRawString(self):
         """ get the raw table string in the app
@@ -131,7 +131,7 @@ class App:
         raw = self.text_raw.get("1.0", 'end-1c')
         return raw
 
-    def updateEndText(self, string):
+    def updateTargetText(self, string):
         """ update the text on the finished table text
         """
         self.text_texed.config(state=NORMAL)
@@ -155,6 +155,7 @@ class App:
         try:
             style_index = self.style_list.curselection()[0]
             style = self.styles[style_index]
+            return style
         except IndexError:
             print "Style not selected!"
             return style

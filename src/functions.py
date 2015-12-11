@@ -1,3 +1,6 @@
+"""
+@author: Jingnan Shi
+"""
 
 def is_number(s):
     """ if s is a number, return True

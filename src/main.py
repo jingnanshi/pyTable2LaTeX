@@ -1,3 +1,7 @@
+"""
+@author: Jingnan Shi
+"""
+
 from Tkinter import *
 import tkMessageBox
 from pytable import App

@@ -1,3 +1,7 @@
+"""
+@author: Jingnan Shi
+"""
+
 
 import functions
 
@@ -56,7 +60,7 @@ class Table:
         text = text.split(linechange)
         # split each row into cells by commas
         text = map(lambda x: x.split(delim), text)
-        print text
+        # print text
 
         # calculate the row number
         rows = len(text)
@@ -78,7 +82,7 @@ class Table:
         # generate a new table based of the lol
         # check each cell
         new_text = map(lambda x: ' & '.join(x), text)
-        print new_text
+        # print new_text
         new_text_str = ' \\\\ \n'.join(new_text) + ' \\\\ \n \n'
         
         # cell style
