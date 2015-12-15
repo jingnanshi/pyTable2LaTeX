@@ -9,7 +9,7 @@ A Python program with GUI to convert csv/Excel Tables to LaTeX codes
 You can either run the Python script from command lines, or run the executable compatible with your platform. The GUI is self-explanatory.
 
 ## Screenshot
-![csv to booktabs](1_1_0.png)
+![csv to booktabs](/screenshots/1_1_0.png)
 
 ## Features
 * supported LaTeX table styles: simple, cell, booktabs, longtable
