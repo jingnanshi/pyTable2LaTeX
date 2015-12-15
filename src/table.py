@@ -4,6 +4,7 @@
 
 
 import functions
+import symbols
 
 class Table:
 
@@ -41,10 +42,9 @@ class Table:
         """ escape the special characters present in the string
         """
         string_to_escape = "{([&$#%])}"
-        special_symbol_map = {'\\': '\\textbackslash', '~': '\\textasciitilde'}
         new_str_list = map(lambda x: "\\" + x if x in string_to_escape else x,
                     string)
-        new_symbolfied_list = map(lambda x: special_symbol_map[x] if x == '\\' or x == '~' else x, 
+        new_symbolfied_list = map(lambda x: symbols.unicode_to_latex_dict[x] if x in symbols.unicode_to_latex_dict else x, 
                     new_str_list)
         return ''.join(new_symbolfied_list)
 

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Created on Tue Dec  1 21:30:14 2015
 
 @author: Jingnan Shi
+@contact: jshi@g.hmc.edu
 
 """
 from Tkinter import *
