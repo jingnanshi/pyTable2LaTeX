@@ -1,5 +1,7 @@
 """
 @author: Jingnan Shi
+
+Used package: Tkinter
 """
 
 from Tkinter import *
