@@ -11,8 +11,12 @@ You can either run the Python script from command lines, or run the executable c
 ## Screenshot
 ![csv to booktabs](screenshots/csv_to_booktabs.png)
 
-## Known Issues
-1. Most of the special symbols are not converted right now.
+## Features
+* supported LaTeX table styles: simple, cell, booktabs, longtable
+* supported raw table format: csv, excel
+* math mode enabled
+* clipboard operations supported (copy from & paste to)
+* unicode conversions enabled
 
 
 by Jingnan Shi @ Harvey Mudd College
