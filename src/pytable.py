@@ -44,11 +44,15 @@ class App:
         
         # raw data format   
         format_list = Listbox(master,selectmode = SINGLE,exportselection = False, height=2)
+
         self.formats = self.table.getFormats()
         for i in range(len(self.formats)):
             format_list.insert(i,self.formats[i])
         
         self.format_list = format_list
+        # set focus
+        self.format_list.select_set(0) 
+        self.format_list.event_generate("<<ListboxSelect>>")
         
         # label
         style_lab = Label(master,text = "Choose the LaTeX style you want: ")
@@ -63,6 +67,9 @@ class App:
             style_list.insert(i, self.styles[i])        
 
         self.style_list = style_list
+        # set focus
+        self.style_list.select_set(0) 
+        self.style_list.event_generate("<<ListboxSelect>>")
         
         # math? checkbox
         self.math_var = IntVar()
@@ -98,8 +105,6 @@ class App:
         menubar = Menu(master)
         filemenu = Menu(menubar, tearoff=0)
         filemenu.add_command(label="Open", command=self.openFile)
-        filemenu.add_command(label="Save Table To", command=self.donothing)
-        filemenu.add_command(label="Close", command=self.donothing)
         
         filemenu.add_separator()
 
@@ -107,7 +112,6 @@ class App:
         menubar.add_cascade(label="File", menu=filemenu)
 
         helpmenu = Menu(menubar, tearoff=0)
-        helpmenu.add_command(label="Help Index", command=self.donothing)
         helpmenu.add_command(label="About...", command=self.showAbout)
         menubar.add_cascade(label="Help", menu=helpmenu)
 
@@ -136,9 +140,6 @@ class App:
         """
         self.master.clipboard_clear() 
         self.master.clipboard_append(self.text_texed.get("1.0", 'end-1c'))
-
-    def donothing(self):
-        pass
 
     def showAbout(self):
         """ show about info
