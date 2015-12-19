@@ -7,7 +7,7 @@ symbols = {'\xc2\xb0':"$^{\\circ}$", u"\\xb2": "^2", u"\\xb3": "^3", u"\\xb1": "
 # Based on John D. Cook's unicode-to-latex javascript
 #
 unicode_to_latex_dict = { 
-u"\u0020":"\\space",
+
 u"\u0023":"\\#",
 u"\u0024":"\\textdollar",
 u"\u0025":"\\%",
