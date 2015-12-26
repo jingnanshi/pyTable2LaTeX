@@ -4,6 +4,8 @@
 @author: Jingnan Shi
 @contact: jshi@g.hmc.edu
 
+To-do: TABLE environment FLOAT Checkbutton
+
 """
 from Tkinter import *
 import tkMessageBox

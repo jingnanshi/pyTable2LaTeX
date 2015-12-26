@@ -41,7 +41,7 @@ class Table:
     def escapeLaTeX(self,string):
         """ escape the special characters present in the string
         """
-        string_to_escape = "{([&$#%])}"
+        string_to_escape = "{(&$#%)}" # fixed the problem of producing \[ \] math environment
         new_str_list = map(lambda x: "\\" + x if x in string_to_escape else x,
                     string)
         new_symbolfied_list = map(lambda x: symbols.unicode_to_latex_dict[x] if x in symbols.unicode_to_latex_dict else x, 
@@ -107,8 +107,8 @@ class Table:
             mid_index = new_text_str.find('\n')+1
             first_row = new_text_str[:mid_index]
             rest = new_text_str[mid_index:]
-            top = first_row + '\\endfirsthead \n'+ first_row  + '\\endhead'
-            top = top + '\\multicolumn{} \n'.format('{' + str(cols) + '}' + '{'+'l'*cols+'}'+'{{Continued\ldots}}')
+            top = first_row + '\\endfirsthead \n'+ first_row  + '\\endhead \n'
+            top = top + '\\multicolumn{} \n'.format('{' + str(cols) + '}' + '{'+'c'+'}'+'{Continued\ldots} \\\\ \n')
             top = top + '\\endfoot \n\\hline \n\\endlastfoot \n \n'
             new_text_str = top + rest
             new_text_str = '\\begin{} \n \n'.format('{longtable}' + '{'+'l'*cols+'}') + new_text_str + '\\end{longtable}'
