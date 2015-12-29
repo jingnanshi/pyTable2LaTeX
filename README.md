@@ -15,7 +15,7 @@ You can either run the Python script from command lines, or run the executable c
 * supported LaTeX table styles: simple, cell, booktabs, longtable
 * supported raw table format: csv, excel
 * math mode enabled
-* clipboard operations supported (copy from & paste to)
+* clipboard operations supported (copy to & paste from)
 * unicode conversions enabled
 
 
