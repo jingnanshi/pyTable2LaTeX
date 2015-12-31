@@ -18,6 +18,9 @@ You can either run the Python script from command lines, or run the executable c
 * clipboard operations supported (copy to & paste from)
 * unicode conversions enabled
 
+## What should I do if I have a PDF file with tables in it?
+If the PDF you have is text-based, check out [Tabula](http://tabula.technology/). Else, OCR it first then use Tabula. You can then import the csv files into pyTable2LaTeX.
+
 
 by Jingnan Shi @ Harvey Mudd College
 
